@@ -27,11 +27,11 @@
     };
 
     Deck.prototype.dealPlayer = function() {
-      return new Hand([this.pop(), this.pop()], this);
+      return new Hand([this.pop(), this.pop()], this, false, this.playerScore);
     };
 
     Deck.prototype.dealDealer = function() {
-      return new Hand([this.pop().flip(), this.pop()], this, true);
+      return new Hand([this.pop().flip(), this.pop()], this, true, 0);
     };
 
     return Deck;
@@ -39,5 +39,3 @@
   })(Backbone.Collection);
 
 }).call(this);
-
-//# sourceMappingURL=Deck.map

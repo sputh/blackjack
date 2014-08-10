@@ -10,9 +10,9 @@
       return HandView.__super__.constructor.apply(this, arguments);
     }
 
-    HandView.prototype.className = 'hand';
+    HandView.prototype.className = 'hand col-md-6';
 
-    HandView.prototype.template = _.template('<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>');
+    HandView.prototype.template = _.template('<h2> <% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>) </h2>');
 
     HandView.prototype.initialize = function() {
       this.collection.on('add remove change', (function(_this) {
@@ -31,7 +31,15 @@
           model: card
         }).$el;
       }));
-      return this.$('.score').text(this.collection.scores()[0]);
+      if (this.collection.scores().length > 1) {
+        if (this.collection.scores()[1] < 22) {
+          return this.$('.score').text(this.collection.scores()[1]);
+        } else {
+          return this.$('.score').text(this.collection.scores()[0]);
+        }
+      } else {
+        return this.$('.score').text(this.collection.scores()[0]);
+      }
     };
 
     return HandView;
@@ -39,5 +47,3 @@
   })(Backbone.View);
 
 }).call(this);
-
-//# sourceMappingURL=HandView.map

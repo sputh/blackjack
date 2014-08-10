@@ -12,7 +12,9 @@
 
     CardView.prototype.className = 'card';
 
-    CardView.prototype.template = _.template('<%= rankName %> of <%= suitName %>');
+    CardView.prototype.template = _.template('<img src="img/cards/<%= rankName %>-<%= suitName %>.png">');
+
+    CardView.prototype.template2 = _.template('<img src="img/card-back.png">');
 
     CardView.prototype.initialize = function() {
       this.model.on('change', (function(_this) {
@@ -25,9 +27,10 @@
 
     CardView.prototype.render = function() {
       this.$el.children().detach().end().html;
-      this.$el.html(this.template(this.model.attributes));
-      if (!this.model.get('revealed')) {
-        return this.$el.addClass('covered');
+      if (this.model.get('revealed')) {
+        return this.$el.html(this.template(this.model.attributes));
+      } else {
+        return this.$el.html(this.template2(this.model.attributes));
       }
     };
 
@@ -36,5 +39,3 @@
   })(Backbone.View);
 
 }).call(this);
-
-//# sourceMappingURL=CardView.map

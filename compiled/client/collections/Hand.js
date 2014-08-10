@@ -12,9 +12,12 @@
 
     Hand.prototype.model = Card;
 
-    Hand.prototype.initialize = function(array, deck, isDealer) {
+    Hand.prototype.canPlay = true;
+
+    Hand.prototype.initialize = function(array, deck, isDealer, points) {
       this.deck = deck;
       this.isDealer = isDealer;
+      this.points = points;
     };
 
     Hand.prototype.hit = function() {
@@ -29,10 +32,6 @@
       return this.trigger('compareScore');
     };
 
-    Hand.prototype.clear = function() {
-      return console.log("before clear", this);
-    };
-
     Hand.prototype.scores = function() {
       var hasAce, score;
       hasAce = this.reduce(function(memo, card) {
@@ -41,12 +40,13 @@
       score = this.reduce(function(score, card) {
         return score + (card.get('revealed') ? card.get('value') : 0);
       }, 0);
-      if (score > 21) {
-        console.log("bust");
+      if (score > 21 && this.canPlay) {
+        this.canPlay = false;
         this.trigger('bust');
       }
-      if (score === 21) {
-        this.trigger('winner');
+      if (score === 21 && this.length === 2 && this.canPlay) {
+        this.canPlay = false;
+        this.trigger('blackjack');
       }
       if (hasAce) {
         return [score, score + 10];
@@ -64,5 +64,3 @@
   })(Backbone.Collection);
 
 }).call(this);
-
-//# sourceMappingURL=Hand.map

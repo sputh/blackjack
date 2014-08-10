@@ -10,7 +10,7 @@
       return AppView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
+    AppView.prototype.template = _.template('<div class="top"> <h2 class="score">Your Score: <span></span></h2> <button class="hit-button btn btn-info">Hit</button> <button class="stand-button btn btn-info">Stand</button> <button class="newGame-button btn btn-info" style="display: none;">Start a New Game</button> </div> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
 
     AppView.prototype.events = {
       "click .hit-button": function() {
@@ -18,13 +18,41 @@
       },
       "click .stand-button": function() {
         return this.model.get('dealerHand').stand();
+      },
+      "click .newGame-button": function() {
+        return this.model.start();
       }
     };
 
     AppView.prototype.initialize = function() {
+      this.model.on('change:playerHand', (function(_this) {
+        return function() {
+          return _this.render();
+        };
+      })(this));
       this.model.on('change:dealerHand', (function(_this) {
         return function() {
           return _this.render();
+        };
+      })(this));
+      this.model.on('gameEnded', (function(_this) {
+        return function() {
+          return _this.showNewGameButton();
+        };
+      })(this));
+      this.model.on('dealerWon', (function(_this) {
+        return function() {
+          return _this.dealerWon();
+        };
+      })(this));
+      this.model.on('showMessage:dealerWon', (function(_this) {
+        return function() {
+          return _this.showMessageDealerWon();
+        };
+      })(this));
+      this.model.on('showMessage:playerWon', (function(_this) {
+        return function() {
+          return _this.showMessagePlayerWon();
         };
       })(this));
       return this.render();
@@ -36,9 +64,27 @@
       this.$('.player-hand-container').html(new HandView({
         collection: this.model.get('playerHand')
       }).el);
-      return this.$('.dealer-hand-container').html(new HandView({
+      this.$('.dealer-hand-container').html(new HandView({
         collection: this.model.get('dealerHand')
       }).el);
+      return this.$('.score span').html(this.model.get('playerTotalScore'));
+    };
+
+    AppView.prototype.showNewGameButton = function() {
+      this.render();
+      this.$('.newGame-button').toggle();
+      this.$('.hit-button').toggle();
+      return this.$('.stand-button').toggle();
+    };
+
+    AppView.prototype.showMessageDealerWon = function() {
+      $('.modal-title').html("<strong>Dealer won!!!</strong>");
+      return $('#myModal').modal('show');
+    };
+
+    AppView.prototype.showMessagePlayerWon = function() {
+      $('.modal-title').html("<strong>You won!!!</strong>");
+      return $('#myModal').modal('show');
     };
 
     return AppView;
@@ -46,5 +92,3 @@
   })(Backbone.View);
 
 }).call(this);
-
-//# sourceMappingURL=AppView.map

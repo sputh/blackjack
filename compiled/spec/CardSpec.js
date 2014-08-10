@@ -13,5 +13,3 @@
   });
 
 }).call(this);
-
-//# sourceMappingURL=CardSpec.map

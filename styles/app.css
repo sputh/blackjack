@@ -1,16 +1,50 @@
+body {
+  margin: 20px;
+  background: url('../img/background.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .card {
   float: left;
   border: solid 1px black;
-  width: 100px;
+  width: 120px;
   border-radius: 5px;
-  height: 140px;
-  margin-right: 20px;
+  height: 167px;
+  margin: 5px;
 }
 
 .covered {
   background-color: black;
 }
 
+.player-hand-container,
+.dealer-hand-container {
+  color: white;
+}
+.top {
+  color: white;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .hand {
-  overflow: auto;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  /*overflow: inherit;*/
+}
+/*
+.player-hand-container .card {
+  float: right;
+}
+.player-hand-container h2 {
+  float: right;
+}
+.dealer-hand-container .card {
+  float: left;
+}
+.dealer-hand-container h2 {
+  float: left;
+}
+*/
+
+.modal-title {
 }

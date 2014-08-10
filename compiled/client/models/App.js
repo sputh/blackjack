@@ -11,30 +11,9 @@
     }
 
     App.prototype.initialize = function() {
-      this.start();
-      this.get('dealerHand', this).on('compareScore', (function(_this) {
-        return function() {
-          var dealerScore, playerScore;
-          playerScore = Math.max(_this.get('playerHand').scores());
-          dealerScore = Math.max(_this.get('dealerHand').scores());
-          if (dealerScore > playerScore && dealerScore <= 21) {
-            return alert("Sorry, dealer wins");
-          } else {
-            return alert("You win");
-          }
-        };
-      })(this));
-      this.get('playerHand', this).on('winner', (function(_this) {
-        return function() {
-          alert(_this.get('playerHand').name() + "won!");
-          return _this.start();
-        };
-      })(this));
-      return this.get('playerHand', this).on('startnow', (function(_this) {
-        return function() {
-          return _this.start();
-        };
-      })(this));
+      this.set('playerTotalScore', 0);
+      this.set('dealerTotalScore', 0);
+      return this.start();
     };
 
     App.prototype.start = function() {
@@ -42,7 +21,45 @@
       this.set('deck', deck = new Deck());
       this.set('playerHand', deck.dealPlayer());
       this.set('dealerHand', deck.dealDealer());
-      return this.get('playerHand').on('bust', this.start, this);
+      this.get('dealerHand').on('compareScore', this.compare, this);
+      this.get('playerHand').on('bust', this.compare, this);
+      return this.get('playerHand').on('blackjack', this.blackjack, this);
+    };
+
+    App.prototype.compare = function() {
+      var dealerHandScore, playerHandScore;
+      playerHandScore = this.maxScore('playerHand');
+      dealerHandScore = this.maxScore('dealerHand');
+      if (playerHandScore > 21) {
+        this.trigger('showMessage:dealerWon');
+        this.set('playerTotalScore', this.get('playerTotalScore') - 1);
+        return this.trigger('gameEnded');
+      } else if (dealerHandScore > playerHandScore && dealerHandScore <= 21) {
+        this.trigger('showMessage:dealerWon');
+        this.set('playerTotalScore', this.get('playerTotalScore') - 1);
+        return this.trigger('gameEnded');
+      } else {
+        this.trigger('showMessage:playerWon');
+        this.set('playerTotalScore', this.get('playerTotalScore') + 1);
+        return this.trigger('gameEnded');
+      }
+    };
+
+    App.prototype.maxScore = function(person) {
+      if (this.get(person).scores().length > 1) {
+        if (this.get(person).scores()[1] < 22) {
+          return this.get(person).scores()[1];
+        } else {
+          return this.get(person).scores()[0];
+        }
+      } else {
+        return this.get(person).scores()[0];
+      }
+    };
+
+    App.prototype.blackjack = function() {
+      this.trigger('showMessage:playerWon');
+      return this.trigger('gameEnded');
     };
 
     return App;
@@ -50,5 +67,3 @@
   })(Backbone.Model);
 
 }).call(this);
-
-//# sourceMappingURL=App.map

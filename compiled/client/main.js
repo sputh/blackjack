@@ -5,5 +5,3 @@
   }).$el.appendTo('body');
 
 }).call(this);
-
-//# sourceMappingURL=main.map

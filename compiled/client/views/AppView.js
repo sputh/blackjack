@@ -10,7 +10,7 @@
       return AppView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.template = _.template('<div class="top"> <h2 class="score">Your Score: <span></span></h2> <button class="hit-button btn btn-info">Hit</button> <button class="stand-button btn btn-info">Stand</button> <button class="newGame-button btn btn-info" style="display: none;">Start a New Game</button> </div> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
+    AppView.prototype.template = _.template('<div class="top"> <h2 class="score">Your Score: <span></span></h2> <button class="hit-button btn btn-info">Hit</button> <button class="stand-button btn btn-info">Stand</button> <button class="newGame-button btn btn-info" style="display: none;">Start a New Game</button> </div> <div class="row"> <div class="player-hand-container col-md-6"></div> <div class="dealer-hand-container col-md-6"></div> </div>');
 
     AppView.prototype.events = {
       "click .hit-button": function() {

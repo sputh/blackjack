@@ -1,6 +1,6 @@
 class window.HandView extends Backbone.View
 
-  className: 'hand col-md-6'
+  className: 'hand'
 
   #todo: switch to mustache
   template: _.template '<h2>

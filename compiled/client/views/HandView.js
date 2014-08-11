@@ -10,7 +10,7 @@
       return HandView.__super__.constructor.apply(this, arguments);
     }
 
-    HandView.prototype.className = 'hand col-md-6';
+    HandView.prototype.className = 'hand';
 
     HandView.prototype.template = _.template('<h2> <% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>) </h2>');
 

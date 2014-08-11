@@ -7,8 +7,10 @@ class window.AppView extends Backbone.View
     <button class="stand-button btn btn-info">Stand</button>
     <button class="newGame-button btn btn-info" style="display: none;">Start a New Game</button>
     </div>
-    <div class="player-hand-container"></div>
-    <div class="dealer-hand-container"></div>
+    <div class="row">
+    <div class="player-hand-container col-md-6"></div>
+    <div class="dealer-hand-container col-md-6"></div>
+    </div>
   '
 
   events:

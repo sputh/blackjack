@@ -4,13 +4,18 @@ body {
   background-size: cover;
 }
 
+h2 {
+  margin-top: 0;
+}
+
 .card {
-  float: left;
-  border: solid 1px black;
-  width: 120px;
-  border-radius: 5px;
-  height: 167px;
+  /*float: left;*/
+  /*border: solid 1px black;*/
+  /*width: 120px;*/
+  /*height: 167px;*/
+  /*border-radius: 5px;*/
   margin: 5px;
+  display: inline-block;
 }
 
 .covered {
@@ -20,6 +25,7 @@ body {
 .player-hand-container,
 .dealer-hand-container {
   color: white;
+  padding: 15px 15px 0 15px;
 }
 .top {
   color: white;
@@ -30,21 +36,4 @@ body {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   /*overflow: inherit;*/
-}
-/*
-.player-hand-container .card {
-  float: right;
-}
-.player-hand-container h2 {
-  float: right;
-}
-.dealer-hand-container .card {
-  float: left;
-}
-.dealer-hand-container h2 {
-  float: left;
-}
-*/
-
-.modal-title {
 }
